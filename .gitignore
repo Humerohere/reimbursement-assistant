@@ -1,4 +1,10 @@
 /venv
 
+# IDE files
 .idea
 .idea/
+
+# Python bytecode files
+__pycache__/
+*.pyc
+*.pyo
