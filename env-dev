@@ -1,0 +1,6 @@
+; DEVELOPMENT ENVIRONMENT
+
+LLAMA_CLOUD_API_KEY = 'llx-N9mj40pAWhaJLo2XnQiVuX6kevs8AsvQyooVwE0z6UgWN5DC'
+LLAMA_UPLOAD_URL = 'https://api.cloud.llamaindex.ai/api/parsing/upload'
+LLAMA_JOB_STATUS_URL = 'https://api.cloud.llamaindex.ai/api/parsing/job/{job_id}'
+LLAMA_RESULT_URL = 'https://api.cloud.llamaindex.ai/api/parsing/job/{job_id}/result/markdown'

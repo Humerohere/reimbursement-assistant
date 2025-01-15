@@ -5,3 +5,5 @@ opencv-python-headless
 pytesseract
 pillow
 python-dotenv
+llama-parse
+faiss-cpu
