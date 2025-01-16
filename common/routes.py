@@ -1,7 +1,8 @@
-import os
-import cv2
+from .generate_embeddings import GenerateVectorDatabase
 from fastapi import APIRouter, UploadFile, File
 import numpy as np
+import os
+import cv2
 
 common_router = APIRouter()
 
@@ -37,6 +38,7 @@ def upload_docs(document: UploadFile = File(...)):
     try:
         from .controllers import LlamaCloudParsingController
         file_name = document.filename.removesuffix('.pdf')
+        file_name = file_name.replace(" ", "_")
         # job_id, status = LlamaCloudParsingController.upload_file(document)
         job_id, status = '3f90b680-fff9-4b15-aec7-ab60d62ee91b', 'PENDING'
         print(f"FILE UPLOADED SUCCESSFULLY JOB ID: {job_id} WITH STATUS: {status}")
@@ -46,10 +48,11 @@ def upload_docs(document: UploadFile = File(...)):
             parsed_result = LlamaCloudParsingController.get_parsed_result(job_id)
             if parsed_result:
                 text = parsed_result['markdown']
-                markdown_file_path = os.path.join(BASE_DIR, 'uploads', f"{file_name}")
+                markdown_file_path = os.path.join(BASE_DIR, 'uploads', f"{file_name}.md")
                 with open(markdown_file_path, 'w') as md_file:
                     md_file.write(text)
-                    return {"status": f"FILE {file_name} SAVED IN UPLOADS"}
+                GenerateVectorDatabase.generate_embedding(markdown_file_path, file_name)
+                return {"status": f"FILE {file_name} SAVED IN UPLOADS"}
             return {"status": "NO RESULTS FOUND"}
 
     except Exception as e:
